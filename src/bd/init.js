@@ -8,9 +8,15 @@ export async function initBaseDeDatos() {
 
     await mongoose.connect(process.env.MONGO_URI);
 
-    console.log("Conectado a MongoDB 🚀");
+    console.log("Conectado a MongoDB ");
+
   } catch (error) {
-    console.error("Error al conectar a MongoDB:", error);
-    process.exit(1);
+    console.error(" Error al conectar a MongoDB:", error.message);
+
+    console.log(" Reintentando conexión en 5s...");
+
+    setTimeout(() => {
+      process.exit(1);
+    }, 5000);
   }
 }
