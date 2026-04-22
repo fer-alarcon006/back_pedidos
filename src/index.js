@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config();
-
+dotenv.config(); 
 import { app } from "./app.js";
 import { initBaseDeDatos } from "./bd/init.js";
 
@@ -11,11 +10,10 @@ async function iniciarServidor() {
     await initBaseDeDatos();
 
     app.listen(PORT, () => {
-      console.log(`Servidor en http://localhost:${PORT} `);
-    });
+console.log(` Servidor corriendo en puerto ${PORT}`);    });
 
   } catch (error) {
-    console.error("Error al iniciar:", error);
+    console.error(" Error al iniciar:", error);
   }
 }
 

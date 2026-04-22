@@ -1,13 +1,11 @@
 import Producto from "../bd/modelos/producto.js";
 export const productosRoutes = (app) => {
 
-  // 🔥 GET REAL DESDE MONGO
   app.get("/api/v1/productos", async (req, res) => {
     const productos = await Producto.find();
     res.json(productos);
   });
 
-  // 🔥 POST
   app.post("/api/v1/productos", async (req, res) => {
     const nuevo = new Producto({
       name: req.body.name,
@@ -21,7 +19,7 @@ export const productosRoutes = (app) => {
     res.json(nuevo);
   });
 
-  // 🔥 DELETE
+  // s DELETE
   app.delete("/api/v1/productos/:id", async (req, res) => {
     const { id } = req.params;
 

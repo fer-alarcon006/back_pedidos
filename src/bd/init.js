@@ -2,10 +2,15 @@ import mongoose from "mongoose";
 
 export async function initBaseDeDatos() {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/venta_lenos");
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI no está definida");
+    }
 
-    console.log("Conectado a MongoDB ");
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("Conectado a MongoDB 🚀");
   } catch (error) {
     console.error("Error al conectar a MongoDB:", error);
+    process.exit(1);
   }
 }
