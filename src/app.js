@@ -14,19 +14,16 @@ const app = express();
 
 app.use(helmet());
 
+app.use(cors()); 
 
-app.use(cors({
-  origin: "http://localhost:5173"
-}));
-
-
-app.use(express.json());
-
+app.use(express.json({ limit: "10kb" }));
 
 const limiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10,
-  message: "Demasiadas peticiones, intenta más tarde"
+  message: {
+    error: "Demasiadas peticiones, intenta más tarde"
+  }
 });
 
 app.use(limiter);
@@ -35,14 +32,22 @@ app.use(limiter);
 app.use(xss());
 
 
-pedidosRoutes(app);
-productosRoutes(app);
-comentariosRoutes(app);
-usuariosRoutes(app);
+
+try {
+  pedidosRoutes(app);
+  productosRoutes(app);
+  comentariosRoutes(app);
+  usuariosRoutes(app);
+} catch (error) {
+  console.error(" Error cargando rutas:", error);
+}
+
 
 
 app.get("/", (req, res) => {
-  res.send("API funcionando");
+  res.status(200).json({
+    message: "API funcionando correctamente "
+  });
 });
 
 export { app };
