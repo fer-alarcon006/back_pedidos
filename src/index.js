@@ -1,6 +1,14 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+import { app } from "./app.js";
+import { initBaseDeDatos } from "./bd/init.js";
+
 async function iniciarServidor() {
   try {
     console.log(" Iniciando servidor...");
+
+    console.log("MONGO:", process.env.MONGO_URI);
 
     await initBaseDeDatos();
 
