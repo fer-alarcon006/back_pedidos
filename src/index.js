@@ -1,14 +1,22 @@
 async function iniciarServidor() {
   try {
+    console.log(" Iniciando servidor...");
+
     await initBaseDeDatos();
-    console.log("Conectado a MongoDB ");
+
+    const PORT = process.env.PORT || 3001;
 
     app.listen(PORT, () => {
-      console.log(`Servidor en puerto ${PORT}`);
+      console.log(` Servidor corriendo en puerto ${PORT}`);
     });
 
   } catch (error) {
-    console.error(" ERROR EN INICIO:", error);
-    process.exit(1);
+    console.error(" ERROR CRÍTICO:", error);
+
+    setTimeout(() => {
+      process.exit(1);
+    }, 3000);
   }
 }
+
+iniciarServidor();
