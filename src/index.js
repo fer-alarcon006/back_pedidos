@@ -4,27 +4,17 @@ dotenv.config();
 import { app } from "./app.js";
 import { initBaseDeDatos } from "./bd/init.js";
 
-async function iniciarServidor() {
+const PORT = process.env.PORT || 3001;
+
+console.log(" Iniciando app...");
+
+app.listen(PORT, async () => {
+  console.log(` Servidor corriendo en puerto ${PORT}`);
+
   try {
-    console.log(" Iniciando servidor...");
-
-    console.log("MONGO:", process.env.MONGO_URI);
-
     await initBaseDeDatos();
-
-    const PORT = process.env.PORT || 3001;
-
-    app.listen(PORT, () => {
-      console.log(` Servidor corriendo en puerto ${PORT}`);
-    });
-
+    console.log(" Mongo conectado");
   } catch (error) {
-    console.error(" ERROR CRÍTICO:", error);
-
-    setTimeout(() => {
-      process.exit(1);
-    }, 3000);
+    console.error(" Error Mongo:", error);
   }
-}
-
-iniciarServidor();
+});
